@@ -1,0 +1,15 @@
+#!/usr/bin/perl -w
+
+use Net::SMTP;
+
+$smtp = Net::SMTP->new("192.168.2.6");
+
+$smtp->mail("hermes\@vooruit.be");
+$smtp->to("wimr\@vooruit.be");
+$smtp->data();
+$smtp->datasend("Subject: $ARGV[0]\n");
+$smtp->datasend("\n");
+$smtp->datasend("$ARGV[1]");
+$smtp->datasend("\n");
+$smtp->dataend();
+$smtp->quit();

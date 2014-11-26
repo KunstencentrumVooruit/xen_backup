@@ -1,0 +1,32 @@
+#!/usr/bin/perl
+
+open(my $output, "xe vm-list params=name-label,uuid,other-config|") or die "Couldn't get output: $!";
+
+my @uuids;
+my %name_value;
+my $name_last;
+my $uuid;
+
+while (<$output>) {
+
+if (/uuid\s+\([\s\w]+\)\s+:\s+([\w\d\.-]+)/) {
+$uuid = $1;
+}
+if (/XenCenter.CustomFields.backup:\s+(yes)/) {
+$name_value{ $uuid } = $1;
+#$name_value{ 'backup_yes' } = $1;
+
+}
+}
+
+while (my ($id, $backup) = each (%name_value) ) {
+
+	print "add_to_backup_list \"$id\"\n";
+
+}
+
+
+
+#if (/name-label\s+\([\s\w]+\)\s+:\s+([\w\d\.-]+)/) {
+#$name_last = $1;
+#}
